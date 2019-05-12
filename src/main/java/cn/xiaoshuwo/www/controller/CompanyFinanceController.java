@@ -4,7 +4,6 @@ import cn.xiaoshuwo.www.pojo.CommonPageListWithTotal;
 import cn.xiaoshuwo.www.pojo.Result;
 import cn.xiaoshuwo.www.pojo.companyfinance.*;
 import cn.xiaoshuwo.www.service.CompanyFinanceService;
-import cn.xiaoshuwo.www.util.EntityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

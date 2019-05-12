@@ -2,9 +2,9 @@ package cn.xiaoshuwo.www.controller;
 
 import cn.xiaoshuwo.www.pojo.CommonPageListWithTotal;
 import cn.xiaoshuwo.www.pojo.Result;
-import cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceParam;
-import cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceResult;
+import cn.xiaoshuwo.www.pojo.companyfinance.*;
 import cn.xiaoshuwo.www.service.CompanyFinanceService;
+import cn.xiaoshuwo.www.util.EntityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +34,25 @@ public class CompanyFinanceController {
             @RequestBody CompanyFinanceParam companyFinanceParam){
         return companyFinanceService.getCompanyFinanceList(companyFinanceParam);
     }
+
+    @ApiOperation(value = "新增接口", notes = "新增接口")
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public Result save(@RequestBody CompanyFinanceSaveParam companyFinanceSaveParam) {
+        return companyFinanceService.save(companyFinanceSaveParam);
+    }
+
+    @ApiOperation(value = "编辑接口", notes = "编辑接口")
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public Result edit(@RequestBody CompanyFinanceEditParam companyFinanceSaveParam) {
+        return companyFinanceService.edit(companyFinanceSaveParam);
+    }
+
+    @ApiOperation(value = "删除接口", notes = "删除接口")
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public Result remove(@RequestBody CompanyFinanceRemoveParam companyFinanceRemoveParam) {
+        return companyFinanceService.remove(companyFinanceRemoveParam);
+    }
+
+
 
 }

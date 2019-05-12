@@ -18,5 +18,35 @@
         order by cf.row_create_time desc
     </select>
 
+    <insert id="save" parameterType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceSaveParam">
+        INSERT INTO
+        companyfinance(companyName,arrears,channel,row_creater,row_modifier,row_create_time,row_modify_time)
+        VALUES(#{companyName,jdbcType=VARCHAR},#{arrears,jdbcType=DOUBLE},#{channel,jdbcType=TINYINT},#{row_creater,jdbcType=VARCHAR},
+        #{row_modifier,jdbcType=INTEGER},str_to_date(#{row_create_time},'%Y-%m-%d %H:%i:%s'),str_to_date(#{row_modify_time},'%Y-%m-%d %H:%i:%s'))
+    </insert>
+
+    <select id="checkExistedCompanyNameForSave" parameterType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceSaveParam" resultType="int">
+        select count(*) FROM companyfinance cf where cf.row_state = 1 and cf.companyName = #{companyName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="checkExistedCompanyNameForEdit" parameterType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceEditParam" resultType="int">
+        select count(*) FROM companyfinance cf where cf.row_state = 1 and cf.companyName = #{companyName,jdbcType=VARCHAR}
+        and cf.id != #{id}
+    </select>
+
+    <update id="edit" parameterType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceEditParam">
+        update companyfinance
+        <set>
+            <if test="companyName != null">`companyName` = #{companyName}, </if>
+            <if test="arrears != null">`arrears` = #{arrears}, </if>
+            <if test="row_modifier != null">`row_modifier` = #{row_modifier}, </if>
+            <if test="row_modify_time != null">`row_modify_time` =str_to_date(#{row_modify_time},'%Y-%m-%d %H:%i:%s'), </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="remove">
+        update companyfinance set row_state = 0, row_modifier = #{row_modifier,jdbcType=INTEGER}, row_modify_time = str_to_date(#{row_modify_time},'%Y-%m-%d %H:%i:%s') where id = #{id}
+    </update>
 
 </mapper>

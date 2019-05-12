@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyFinance">
+
+    <select id="getCompanyFinanceList" resultType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceResult"
+            parameterType="cn.xiaoshuwo.www.pojo.companyfinance.CompanyFinanceParam">
+        select cf.id, cf.companyName,
+        IFNULL((select SUM(sd.total) from supplierdetail sd where sd.company_finance_id = cf.id and sd.row_state = 1),0) loanAmount,
+        cf.arrears,
+        IFNULL((select SUM(sd.paid) from supplierdetail sd where sd.company_finance_id = cf.id and sd.row_state = 1),0) paid,
+        (IFNULL((select SUM(sd.total) from supplierdetail sd where sd.company_finance_id = cf.id and sd.row_state = 1),0) + cf.arrears -IFNULL((select SUM(sd.paid) from supplierdetail sd where sd.company_finance_id = cf.id and sd.row_state = 1),0)   ) totalArrears
+        from companyfinance cf
+        where cf.row_state = 1
+        <if test="companyName != null and companyName!=''">
+            and cf.companyName like
+            CONCAT('%',TRIM(#{companyName,jdbcType=VARCHAR}),'%')
+        </if>
+        order by cf.row_create_time desc
+    </select>
+
+
+</mapper>

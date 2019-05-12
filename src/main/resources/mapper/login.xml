@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+
+    <select id="findPasswordByUserName" resultType="cn.xiaoshuwo.www.pojo.requestparam.UserParam"
+            parameterType="cn.xiaoshuwo.www.pojo.requestparam.UserParam">
+       select u.password, u.userId, u.name userName from users u where u.name =  #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAllCompanyFinanceCount" resultType="int">
+        select count(*) from companyfinance cf where cf.row_state = 1
+    </select>
+
+    <select id="getAllRunningAccountsCountCount" resultType="int">
+        select count(*) from runningaccount ra where ra.row_state = 1
+    </select>
+
+    <select id="getAllSalesRecordsCountCount" resultType="int">
+        select count(*) from salesreport sr where sr.row_state = 1
+    </select>
+
+
+</mapper>
